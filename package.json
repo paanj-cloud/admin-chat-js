@@ -1,0 +1,47 @@
+{
+    "name": "@paanj/chat-admin",
+    "version": "1.0.0",
+    "description": "Chat admin features for Paanj platform - manage users, conversations, and messages",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist",
+        "README.md",
+        "LICENSE"
+    ],
+    "scripts": {
+        "build": "tsc",
+        "watch": "tsc --watch",
+        "prepublishOnly": "npm run build"
+    },
+    "keywords": [
+        "paanj",
+        "admin",
+        "chat",
+        "messaging",
+        "real-time",
+        "websocket"
+    ],
+    "author": "Paanj",
+    "license": "SEE LICENSE IN LICENSE",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/paanj/chat-baas.git",
+        "directory": "sdks/javascript/chat-admin"
+    },
+    "homepage": "https://github.com/paanj/chat-baas/tree/main/sdks/javascript/chat-admin#readme",
+    "bugs": {
+        "url": "https://github.com/paanj/chat-baas/issues"
+    },
+    "engines": {
+        "node": ">=16.0.0"
+    },
+    "peerDependencies": {
+        "@paanj/admin": "^1.0.0"
+    },
+    "devDependencies": {
+        "@paanj/admin": "file:../admin",
+        "@types/node": "^20.19.25",
+        "typescript": "^5.0.0"
+    }
+}
