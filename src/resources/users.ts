@@ -14,6 +14,14 @@ export class UsersResource {
     // CRUD Operations
 
     /**
+     * Create a new user
+     */
+    async create(data: CreateUserData): Promise<User> {
+        const httpClient = this.admin.getHttpClient();
+        return httpClient.request<User>('POST', '/api/v1/users', data);
+    }
+
+    /**
      * Get user by ID
      */
     async get(userId: string): Promise<User> {
@@ -56,7 +64,7 @@ export class UsersResource {
     /**
      * Listen to all user creation events globally
      */
-    onCreate(callback: (user: any) => void): Unsubscribe {
+    onCreate(callback: (data: User) => void): Unsubscribe {
         this.admin.subscribe({
             type: 'admin.subscribe',
             resource: 'global',
