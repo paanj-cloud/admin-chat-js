@@ -4,7 +4,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@paanj/chat-admin.svg)](https://www.npmjs.com/package/@paanj/chat-admin)
 [![License](https://img.shields.io/badge/license-Custom-blue.svg)](./LICENSE)
-[![Node.js](https://img.shields.io/badge/Node.js-16+-green.svg)](https://nodejs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
 
 ## Overview
 
@@ -22,7 +22,7 @@ npm install @paanj/admin @paanj/chat-admin
 ```
 
 **Requirements:**
-- Node.js 16.0.0 or higher
+- Node.js 18.0.0 or higher
 - `@paanj/admin` ^1.0.0
 
 ## Quick Start
