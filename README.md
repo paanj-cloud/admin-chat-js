@@ -69,6 +69,11 @@ Creates a new AdminChat instance using an existing PaanjAdmin instance.
 #### CRUD Operations
 
 ```typescript
+// Create user
+const newUser = await chat.users.create({
+  userData: { name: 'New User', email: 'user@example.com' }
+});
+
 // Get user by ID
 const user = await chat.users.get('user_123');
 
