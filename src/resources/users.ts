@@ -59,6 +59,30 @@ export class UsersResource {
         return httpClient.request<User[]>('GET', `/api/v1/users${query ? `?${query}` : ''}`);
     }
 
+    /**
+     * Block a user on behalf of another user
+     * @param blockerId ID of the user who is blocking
+     * @param blockedId ID of the user to be blocked
+     */
+    async block(blockerId: string, blockedId: string): Promise<void> {
+        const httpClient = this.admin.getHttpClient();
+        await httpClient.request<void>('POST', `/admin/users/${blockerId}/block`, {
+            blockedUserId: parseInt(blockedId)
+        });
+    }
+
+    /**
+     * Unblock a user on behalf of another user
+     * @param blockerId ID of the user who is unblocking
+     * @param blockedId ID of the user to be unblocked
+     */
+    async unblock(blockerId: string, blockedId: string): Promise<void> {
+        const httpClient = this.admin.getHttpClient();
+        await httpClient.request<void>('POST', `/admin/users/${blockerId}/unblock`, {
+            blockedUserId: parseInt(blockedId)
+        });
+    }
+
     // Event Listeners
 
     /**

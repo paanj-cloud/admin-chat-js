@@ -69,6 +69,16 @@ async function main() {
             console.log('Update failed (expected in demo)');
         }
 
+        // Example: Block/Unblock user
+        try {
+            await chat.users.block('user_1', 'user_2'); // User 1 blocks User 2
+            console.log('✅ User blocked');
+            await chat.users.unblock('user_1', 'user_2'); // User 1 unblocks User 2
+            console.log('✅ User unblocked');
+        } catch (error) {
+            console.log('Block/Unblock failed (expected in demo)');
+        }
+
         // Example: Send message to a conversation
         try {
             const conv = chat.conversation('conv_123');
