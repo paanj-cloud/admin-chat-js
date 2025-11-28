@@ -119,4 +119,4 @@ chat.messages.onCreate(...);
 ## Support
 
 - 📖 Documentation: https://docs.paanj.com
-- 🐛 Issues: https://github.com/paanj/chat-baas/issues
+- 🐛 Issues: https://github.com/paanj-cloud/admin-chat-js/issues

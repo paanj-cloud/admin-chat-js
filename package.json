@@ -1,6 +1,6 @@
 {
     "name": "@paanj/chat-admin",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Chat admin features for Paanj platform - manage users, conversations, and messages",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
@@ -49,7 +49,7 @@
         "access": "public"
     },
     "peerDependencies": {
-        "@paanj/admin": "^1.0.0"
+        "@paanj/admin": "^1.0.1"
     },
     "devDependencies": {
         "@paanj/admin": "file:../admin",
