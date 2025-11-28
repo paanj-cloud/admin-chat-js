@@ -48,16 +48,50 @@ export class UsersResource {
     /**
      * List users with optional filters
      */
-    async list(filters?: UserFilters): Promise<User[]> {
-        const httpClient = this.admin.getHttpClient();
-        const params = new URLSearchParams();
-        if (filters?.email) params.append('email', filters.email);
-        if (filters?.limit) params.append('limit', filters.limit.toString());
-        if (filters?.offset) params.append('offset', filters.offset.toString());
+    /**
+     * List users with optional filters
+     */
+    /*
+    list(filters?: UserFilters) {
+        const execute = async (finalFilters: UserFilters) => {
+            const httpClient = this.admin.getHttpClient();
+            const params = new URLSearchParams();
+            if (finalFilters?.email) params.append('email', finalFilters.email);
+            if (finalFilters?.limit) params.append('limit', finalFilters.limit.toString());
+            if (finalFilters?.offset) params.append('offset', finalFilters.offset.toString());
 
-        const query = params.toString();
-        return httpClient.request<User[]>('GET', `/api/v1/users${query ? `?${query}` : ''}`);
+            const query = params.toString();
+            return httpClient.request<User[]>('GET', `/api/v1/users${query ? `?${query}` : ''}`);
+        };
+
+        const currentFilters = { ...filters };
+
+        const chain = {
+            then: (resolve: (value: User[]) => void, reject: (reason: any) => void) => {
+                return execute(currentFilters).then(resolve, reject);
+            },
+            email: (email: string) => {
+                currentFilters.email = email;
+                return chain;
+            },
+            limit: (limit: number) => {
+                currentFilters.limit = limit;
+                return chain;
+            },
+            page: (page: number) => {
+                const limit = currentFilters.limit || 50;
+                currentFilters.offset = (page - 1) * limit;
+                return chain;
+            },
+            offset: (offset: number) => {
+                currentFilters.offset = offset;
+                return chain;
+            }
+        };
+
+        return chain;
     }
+    */
 
     /**
      * Block a user on behalf of another user

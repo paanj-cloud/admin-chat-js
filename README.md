@@ -88,8 +88,10 @@ await chat.users.update('user_123', {
 // Delete user
 await chat.users.delete('user_123');
 
-// List users with filters
-const users = await chat.users.list({ limit: 10 });
+<!--
+// List users with filters (fluent API)
+const users = await chat.users.list().limit(10);
+-->
 ```
 
 #### Event Listeners
@@ -152,8 +154,8 @@ await chat.conversations.update('conv_123', {
 // Delete conversation
 await chat.conversations.delete('conv_123');
 
-// List conversations
-const conversations = await chat.conversations.list({ limit: 10 });
+// List conversations (fluent API)
+const conversations = await chat.conversations.list().limit(10);
 ```
 
 #### Event Listeners
@@ -172,7 +174,7 @@ chat.conversations.onDelete((data) => console.log('Conversation deleted:', data)
 const conv = chat.conversation('conv_123');
 
 // Send message
-await conv.sendMessage('Hello from admin!', {
+await conv.send('Hello from admin!', {
   priority: 'high'
 });
 
@@ -243,7 +245,7 @@ async function main() {
   });
 
   // Send message
-  await chat.conversation(conv.id).sendMessage(
+  await chat.conversation(conv.id).send(
     'Welcome! How can we help you?'
   );
 

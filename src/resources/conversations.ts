@@ -48,15 +48,47 @@ export class ConversationsResource {
     /**
      * List conversations with optional filters
      */
-    async list(filters?: ConversationFilters): Promise<Conversation[]> {
-        const httpClient = this.admin.getHttpClient();
-        const params = new URLSearchParams();
-        if (filters?.userId) params.append('userId', filters.userId);
-        if (filters?.limit) params.append('limit', filters.limit.toString());
-        if (filters?.offset) params.append('offset', filters.offset.toString());
+    /**
+     * List conversations with optional filters
+     */
+    list(filters?: ConversationFilters) {
+        const execute = async (finalFilters: ConversationFilters) => {
+            const httpClient = this.admin.getHttpClient();
+            const params = new URLSearchParams();
+            if (finalFilters?.userId) params.append('userId', finalFilters.userId);
+            if (finalFilters?.limit) params.append('limit', finalFilters.limit.toString());
+            if (finalFilters?.offset) params.append('offset', finalFilters.offset.toString());
 
-        const query = params.toString();
-        return httpClient.request<Conversation[]>('GET', `/api/v1/conversations${query ? `?${query}` : ''}`);
+            const query = params.toString();
+            return httpClient.request<Conversation[]>('GET', `/api/v1/conversations${query ? `?${query}` : ''}`);
+        };
+
+        const currentFilters = { ...filters };
+
+        const chain = {
+            then: (resolve: (value: Conversation[]) => void, reject: (reason: any) => void) => {
+                return execute(currentFilters).then(resolve, reject);
+            },
+            userId: (userId: string) => {
+                currentFilters.userId = userId;
+                return chain;
+            },
+            limit: (limit: number) => {
+                currentFilters.limit = limit;
+                return chain;
+            },
+            page: (page: number) => {
+                const limit = currentFilters.limit || 50;
+                currentFilters.offset = (page - 1) * limit;
+                return chain;
+            },
+            offset: (offset: number) => {
+                currentFilters.offset = offset;
+                return chain;
+            }
+        };
+
+        return chain;
     }
 
     // Event Listeners
@@ -105,7 +137,10 @@ export class ConversationsResource {
             /**
              * Send a message in this conversation
              */
-            sendMessage: async (content: string, metadata?: Record<string, any>): Promise<Message> => {
+            /**
+             * Send a message in this conversation
+             */
+            send: async (content: string, metadata?: Record<string, any>): Promise<Message> => {
                 const httpClient = this.admin.getHttpClient();
                 return httpClient.request<Message>('POST', `/api/v1/conversations/${conversationId}/messages`, {
                     content,

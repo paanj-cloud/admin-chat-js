@@ -84,7 +84,7 @@ export class AdminChat {
      * @example
      * ```typescript
      * const conv = chat.conversation('conv_123');
-     * await conv.sendMessage('Hello!');
+     * await conv.send('Hello!');
      * conv.onMessage((msg) => console.log(msg));
      * ```
      */
