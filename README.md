@@ -71,7 +71,9 @@ Creates a new AdminChat instance using an existing PaanjAdmin instance.
 ```typescript
 // Create user
 const newUser = await chat.users.create({
-  userData: { name: 'New User', email: 'user@example.com' }
+  email: 'user@example.com',
+  name: 'New User',
+  userData: { avatar: 'https://example.com/avatar.png' }
 });
 
 // Get user by ID
@@ -79,6 +81,7 @@ const user = await chat.users.get('user_123');
 
 // Update user
 await chat.users.update('user_123', {
+  email: 'newemail@example.com',
   userData: { status: 'active', role: 'moderator' }
 });
 
@@ -107,6 +110,26 @@ chat.users.onDelete((data) => {
   console.log('User deleted:', data);
 });
 ```
+
+#### Block Operations
+
+Use the fluent API to block/unblock users on behalf of a specific user:
+
+```typescript
+// Block 'user-456' on behalf of 'user-123'
+await chat.users('user-123').block('user-456');
+
+// Unblock 'user-456' on behalf of 'user-123'
+await chat.users('user-123').unblock('user-456');
+
+// Block multiple users (call multiple times)
+const usersToBlock = ['user-456', 'user-789'];
+for (const userId of usersToBlock) {
+  await chat.users('user-123').block(userId);
+}
+```
+
+**Note:** The old API `chat.users.block(blockerId, blockedId)` is still available for backward compatibility, but the fluent API is recommended.
 
 ### Conversations Resource
 

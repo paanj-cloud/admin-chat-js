@@ -2,6 +2,7 @@ import { PaanjAdmin } from '@paanj/admin';
 import { MessagesResource } from './resources/messages';
 import { UsersResource } from './resources/users';
 import { ConversationsResource } from './resources/conversations';
+import { AdminUserContext } from './resources/admin-user-context';
 
 /**
  * AdminChat - Chat administration features for Paanj platform
@@ -25,6 +26,9 @@ import { ConversationsResource } from './resources/conversations';
  * // Manage users
  * const user = await chat.users.get('user_123');
  * await chat.users.update('user_123', { userData: { status: 'active' } });
+ * 
+ * // Block users (fluent API)
+ * await chat.users('user_123').block('user_456');
  * ```
  */
 export class AdminChat {
@@ -35,8 +39,12 @@ export class AdminChat {
 
     /**
      * Users resource - manage and monitor users
+     * 
+     * Can be used as:
+     * - Direct resource methods: chat.users.create(), chat.users.get(), etc.
+     * - Fluent API for blocking: chat.users('blockerId').block('blockedId')
      */
-    public readonly users: UsersResource;
+    public users: UsersResource & ((blockerId: string) => AdminUserContext);
 
     /**
      * Conversations resource - manage and monitor conversations
@@ -55,8 +63,16 @@ export class AdminChat {
 
         // Initialize resources
         this.messages = new MessagesResource(admin);
-        this.users = new UsersResource(admin);
+        const usersResource = new UsersResource(admin);
         this.conversations = new ConversationsResource(admin);
+
+        // Create fluent API for users (similar to client SDK)
+        this.users = Object.assign(
+            (blockerId: string) => {
+                return new AdminUserContext(admin, blockerId, usersResource);
+            },
+            usersResource
+        ) as UsersResource & ((blockerId: string) => AdminUserContext);
     }
 
     /**
