@@ -61,6 +61,7 @@ export class UsersResource {
 
     /**
      * Block a user on behalf of another user
+     * @internal Used by AdminUserContext
      * @param blockerId ID of the user who is blocking
      * @param blockedId ID of the user to be blocked
      */
@@ -73,6 +74,7 @@ export class UsersResource {
 
     /**
      * Unblock a user on behalf of another user
+     * @internal Used by AdminUserContext
      * @param blockerId ID of the user who is unblocking
      * @param blockedId ID of the user to be unblocked
      */

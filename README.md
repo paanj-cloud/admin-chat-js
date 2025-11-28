@@ -129,8 +129,6 @@ for (const userId of usersToBlock) {
 }
 ```
 
-**Note:** The old API `chat.users.block(blockerId, blockedId)` is still available for backward compatibility, but the fluent API is recommended.
-
 ### Conversations Resource
 
 #### CRUD Operations
