@@ -18,7 +18,7 @@ export class ConversationsResource {
      */
     async create(data: CreateConversationData): Promise<Conversation> {
         const httpClient = this.admin.getHttpClient();
-        return httpClient.request<Conversation>('POST', '/api/v1/conversations', data);
+        return httpClient.request<Conversation>('POST', '/admin/conversations', data);
     }
 
     /**
@@ -26,7 +26,7 @@ export class ConversationsResource {
      */
     async get(conversationId: string): Promise<Conversation> {
         const httpClient = this.admin.getHttpClient();
-        return httpClient.request<Conversation>('GET', `/api/v1/conversations/${conversationId}`);
+        return httpClient.request<Conversation>('GET', `/admin/conversations/${conversationId}`);
     }
 
     /**
@@ -34,7 +34,7 @@ export class ConversationsResource {
      */
     async update(conversationId: string, updates: Partial<Conversation>): Promise<Conversation> {
         const httpClient = this.admin.getHttpClient();
-        return httpClient.request<Conversation>('PATCH', `/api/v1/conversations/${conversationId}`, updates);
+        return httpClient.request<Conversation>('PATCH', `/admin/conversations/${conversationId}`, updates);
     }
 
     /**
@@ -42,7 +42,7 @@ export class ConversationsResource {
      */
     async delete(conversationId: string): Promise<void> {
         const httpClient = this.admin.getHttpClient();
-        await httpClient.request<void>('DELETE', `/api/v1/conversations/${conversationId}`);
+        await httpClient.request<void>('DELETE', `/admin/conversations/${conversationId}`);
     }
 
     /**
@@ -60,7 +60,7 @@ export class ConversationsResource {
             if (finalFilters?.offset) params.append('offset', finalFilters.offset.toString());
 
             const query = params.toString();
-            return httpClient.request<Conversation[]>('GET', `/api/v1/conversations${query ? `?${query}` : ''}`);
+            return httpClient.request<Conversation[]>('GET', `/admin/conversations${query ? `?${query}` : ''}`);
         };
 
         const currentFilters = { ...filters };
@@ -142,7 +142,7 @@ export class ConversationsResource {
              */
             send: async (content: string, metadata?: Record<string, any>): Promise<Message> => {
                 const httpClient = this.admin.getHttpClient();
-                return httpClient.request<Message>('POST', `/api/v1/conversations/${conversationId}/messages`, {
+                return httpClient.request<Message>('POST', `/admin/conversations/${conversationId}/messages`, {
                     content,
                     metadata,
                 });
@@ -153,7 +153,7 @@ export class ConversationsResource {
              */
             addParticipant: async (userId: string): Promise<void> => {
                 const httpClient = this.admin.getHttpClient();
-                await httpClient.request<void>('POST', `/api/v1/conversations/${conversationId}/participants`, {
+                await httpClient.request<void>('POST', `/admin/conversations/${conversationId}/participants`, {
                     userId,
                 });
             },
@@ -163,7 +163,7 @@ export class ConversationsResource {
              */
             removeParticipant: async (userId: string): Promise<void> => {
                 const httpClient = this.admin.getHttpClient();
-                await httpClient.request<void>('DELETE', `/api/v1/conversations/${conversationId}/participants/${userId}`);
+                await httpClient.request<void>('DELETE', `/admin/conversations/${conversationId}/participants/${userId}`);
             },
 
             /**

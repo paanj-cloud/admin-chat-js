@@ -18,7 +18,7 @@ export class UsersResource {
      */
     async create(data: CreateUserData): Promise<User> {
         const httpClient = this.admin.getHttpClient();
-        return httpClient.request<User>('POST', '/api/v1/users', data);
+        return httpClient.request<User>('POST', '/admin/users', data);
     }
 
     /**
@@ -26,7 +26,7 @@ export class UsersResource {
      */
     async get(userId: string): Promise<User> {
         const httpClient = this.admin.getHttpClient();
-        return httpClient.request<User>('GET', `/api/v1/users/${userId}`);
+        return httpClient.request<User>('GET', `/admin/users/${userId}`);
     }
 
     /**
@@ -34,7 +34,7 @@ export class UsersResource {
      */
     async update(userId: string, updates: Partial<User>): Promise<User> {
         const httpClient = this.admin.getHttpClient();
-        return httpClient.request<User>('PATCH', `/api/v1/users/${userId}`, updates);
+        return httpClient.request<User>('PATCH', `/admin/users/${userId}`, updates);
     }
 
     /**
@@ -42,7 +42,7 @@ export class UsersResource {
      */
     async delete(userId: string): Promise<void> {
         const httpClient = this.admin.getHttpClient();
-        await httpClient.request<void>('DELETE', `/api/v1/users/${userId}`);
+        await httpClient.request<void>('DELETE', `/admin/users/${userId}`);
     }
 
     /**

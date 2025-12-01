@@ -66,13 +66,23 @@ export class AdminChat {
         const usersResource = new UsersResource(admin);
         this.conversations = new ConversationsResource(admin);
 
-        // Create fluent API for users (similar to client SDK)
-        this.users = Object.assign(
-            (blockerId: string) => {
-                return new AdminUserContext(admin, blockerId, usersResource);
-            },
-            usersResource
-        ) as UsersResource & ((blockerId: string) => AdminUserContext);
+        // Create fluent API for users with explicit method forwarding
+        const usersFunction = (blockerId: string) => {
+            return new AdminUserContext(admin, blockerId, usersResource);
+        };
+
+        // Explicitly copy all methods from UsersResource
+        usersFunction.create = usersResource.create.bind(usersResource);
+        usersFunction.get = usersResource.get.bind(usersResource);
+        usersFunction.update = usersResource.update.bind(usersResource);
+        usersFunction.delete = usersResource.delete.bind(usersResource);
+        usersFunction.block = usersResource.block.bind(usersResource);
+        usersFunction.unblock = usersResource.unblock.bind(usersResource);
+        usersFunction.onCreate = usersResource.onCreate.bind(usersResource);
+        usersFunction.onUpdate = usersResource.onUpdate.bind(usersResource);
+        usersFunction.onDelete = usersResource.onDelete.bind(usersResource);
+
+        this.users = usersFunction as UsersResource & ((blockerId: string) => AdminUserContext);
     }
 
     /**
