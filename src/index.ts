@@ -15,6 +15,7 @@ export { AdminChat } from './admin-chat';
 export type {
     User,
     Conversation,
+    ConversationMember,
     Message,
     CreateUserData,
     CreateConversationData,

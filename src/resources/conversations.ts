@@ -18,7 +18,21 @@ export class ConversationsResource {
      */
     async create(data: CreateConversationData): Promise<Conversation> {
         const httpClient = this.admin.getHttpClient();
-        return httpClient.request<Conversation>('POST', '/admin/conversations', data);
+
+        // Transform members to API format if provided
+        const payload: any = {
+            name: data.name,
+            metadata: data.metadata
+        };
+
+        if (data.members && data.members.length > 0) {
+            payload.members = data.members.map(m => ({
+                userId: parseInt(m.userId),
+                role: m.role || 'member'
+            }));
+        }
+
+        return httpClient.request<Conversation>('POST', '/admin/conversations', payload);
     }
 
     /**
@@ -151,10 +165,11 @@ export class ConversationsResource {
             /**
              * Add a participant to this conversation
              */
-            addParticipant: async (userId: string): Promise<void> => {
+            addParticipant: async (userId: string, role: 'admin' | 'member' = 'member'): Promise<void> => {
                 const httpClient = this.admin.getHttpClient();
                 await httpClient.request<void>('POST', `/admin/conversations/${conversationId}/participants`, {
-                    userId,
+                    userId: parseInt(userId),
+                    role,
                 });
             },
 

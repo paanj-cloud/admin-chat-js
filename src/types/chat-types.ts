@@ -49,10 +49,15 @@ export interface CreateUserData {
     userData?: Record<string, any>;
 }
 
+export interface ConversationMember {
+    userId: string;
+    role?: 'admin' | 'member';
+}
+
 export interface CreateConversationData {
     name?: string;
     metadata?: Record<string, any>;
-    memberIds: string[];
+    members?: ConversationMember[]; // Members with roles (defaults to 'member')
 }
 
 export interface UserFilters {
